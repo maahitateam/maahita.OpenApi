@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "compile": "tsp compile main.tsp --emit=@typespec/openapi3 && mkdir -p output && cp tsp-output/schema/openapi.yaml output/openapi.yaml"
+    "compile": "tsp compile main.tsp --emit=@typespec/openapi3 && mkdir -p output && cp tsp-output/schema/openapi.yaml output/openapi.yaml",
+    "deploy": "npm run compile && firebase deploy --only hosting"
   },
   "peerDependencies": {
     "@typespec/compiler": "latest",

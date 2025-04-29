@@ -1,5 +1,31 @@
+
 # maahita.OpenApi
 This repo contains OpenAPI documentation for maahita modules.
+
+## Build & Deployment
+
+### Build (Generate OpenAPI YAML)
+
+```sh
+npm run compile
+```
+This command will:
+- Compile the TypeSpec files
+- Generate the OpenAPI YAML at `output/openapi.yaml`
+
+### Deploy to Firebase Hosting
+
+```sh
+npm run deploy
+```
+This command will:
+- Compile and copy the OpenAPI YAML
+- Deploy the `output` folder (including `index.html` and `openapi.yaml`) to Firebase Hosting
+
+#### After deployment
+- Swagger UI will be available at: `https://<your-project-id>.web.app/`
+- The raw OpenAPI YAML will be available at: `https://<your-project-id>.web.app/openapi.yaml`
+
 
 ## Session API
 
