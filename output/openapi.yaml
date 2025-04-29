@@ -1,0 +1,284 @@
+openapi: 3.1.0
+info:
+  title: Session Service
+  version: 0.0.0
+tags:
+  - name: Sessions
+paths:
+  /api/v1/sessions:
+    get:
+      operationId: Sessions_list
+      description: List sessions
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+      tags:
+        - Sessions
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Sessions_create
+      description: Create a session
+      parameters: []
+      responses:
+        '202':
+          description: The request has been accepted for processing, but processing has not yet completed.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: The request conflicts with the current state of the server.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      security:
+        - BearerAuth: []
+  /api/v1/sessions/{classId}:
+    get:
+      operationId: Sessions_read
+      description: Read session
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+      tags:
+        - Sessions
+      security:
+        - BearerAuth: []
+    patch:
+      operationId: Sessions_update
+      description: Update a session
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '400':
+          description: The server could not understand the request due to invalid syntax.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionUpdate'
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Sessions_delete
+      description: Delete a session
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '401':
+          description: Access is unauthorized.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: The server cannot find the requested resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Sessions
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    InternalServerError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - INTERNAL_SERVER_ERROR
+        message:
+          type: string
+    NotFoundError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - NOT_FOUND
+        message:
+          type: string
+    Session:
+      type: object
+      required:
+        - classId
+        - deliveryMode
+      properties:
+        classId:
+          type: integer
+          format: int32
+        deliveryMode:
+          type: string
+          enum:
+            - in-person
+            - online
+    SessionUpdate:
+      type: object
+      properties:
+        classId:
+          type: integer
+          format: int32
+        deliveryMode:
+          type: string
+          enum:
+            - in-person
+            - online
+    UnauthorizedError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          enum:
+            - UNAUTHORIZED
+        message:
+          type: string
+    ValidationError:
+      type: object
+      required:
+        - code
+        - message
+        - details
+      properties:
+        code:
+          type: string
+          enum:
+            - VALIDATION_ERROR
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: Bearer
