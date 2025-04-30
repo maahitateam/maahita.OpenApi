@@ -19,6 +19,6 @@ model InternalServerError {
 
 @error
 model UnauthorizedError {
-    code: "UNAUTHORIZED";
+    code: "UN_AUTHORIZED_ERROR";
     message: string;
 }

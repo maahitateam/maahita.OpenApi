@@ -12,7 +12,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: The request has succeeded.
+          description: Response for a successful list of sessions.
           content:
             application/json:
               schema:
@@ -20,7 +20,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Session'
         '401':
-          description: Access is unauthorized.
+          description: Response for unauthorized session access.
           content:
             application/json:
               schema:
@@ -35,31 +35,31 @@ paths:
       parameters: []
       responses:
         '202':
-          description: The request has been accepted for processing, but processing has not yet completed.
+          description: Response for a successful session acceptance.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
         '400':
-          description: The server could not understand the request due to invalid syntax.
+          description: Response for session validation errors.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
         '401':
-          description: Access is unauthorized.
+          description: Response for unauthorized session access.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
         '409':
-          description: The request conflicts with the current state of the server.
+          description: Response for session conflict errors.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
         '500':
-          description: Server error
+          description: Response for internal server errors.
           content:
             application/json:
               schema:
@@ -87,19 +87,19 @@ paths:
             format: int32
       responses:
         '200':
-          description: The request has succeeded.
+          description: Response for a successful session fetch.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
         '401':
-          description: Access is unauthorized.
+          description: Response for unauthorized session access.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
         '404':
-          description: The server cannot find the requested resource.
+          description: Response when a session is not found.
           content:
             application/json:
               schema:
@@ -120,31 +120,31 @@ paths:
             format: int32
       responses:
         '200':
-          description: The request has succeeded.
+          description: Response for a successful session fetch.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
         '400':
-          description: The server could not understand the request due to invalid syntax.
+          description: Response for session validation errors.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidationError'
         '401':
-          description: Access is unauthorized.
+          description: Response for unauthorized session access.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
         '404':
-          description: The server cannot find the requested resource.
+          description: Response when a session is not found.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: Server error
+          description: Response for internal server errors.
           content:
             application/json:
               schema:
@@ -171,25 +171,25 @@ paths:
             format: int32
       responses:
         '200':
-          description: The request has succeeded.
+          description: Response for a successful session fetch.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
         '401':
-          description: Access is unauthorized.
+          description: Response for unauthorized session access.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
         '404':
-          description: The server cannot find the requested resource.
+          description: Response when a session is not found.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
         '500':
-          description: Server error
+          description: Response for internal server errors.
           content:
             application/json:
               schema:
@@ -258,7 +258,7 @@ components:
         code:
           type: string
           enum:
-            - UNAUTHORIZED
+            - UN_AUTHORIZED_ERROR
         message:
           type: string
     ValidationError:
