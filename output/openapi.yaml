@@ -241,6 +241,9 @@ components:
           format: int32
         deliveryMode:
           $ref: '#/components/schemas/DeliveryMode'
+      examples:
+        - classId: 123456
+          deliveryMode: in-person
     SessionUpdate:
       type: object
       properties:
@@ -249,6 +252,9 @@ components:
           format: int32
         deliveryMode:
           $ref: '#/components/schemas/DeliveryMode'
+      examples:
+        - classId: 123456
+          deliveryMode: in-person
     UnauthorizedError:
       type: object
       required:

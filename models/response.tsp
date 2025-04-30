@@ -6,32 +6,32 @@ using TypeSpec.Http;
 
 @doc("Response for a successful list of sessions.")
 model SessionListResponse {
-    ...OkResponse;
-    ...Body<Session[]>;
+    @statusCode statusCode: 200;
+    @body sessions: Session[];
 }
 
 @doc("Response for a successful session fetch.")
 model SessionResponse {
-    ...OkResponse;
-    ...Body<Session>;
+    @statusCode statusCode: 200;
+    @body session: Session;
 }
 
 @doc("Response for a successful session creation.")
 model SessionCreateResponse {
-    ...CreatedResponse;
-    ...Body<Session>;
+    @statusCode statusCode: 201;
+    @body session: Session;
 }
 
 @doc("Response for a successful session acceptance.")
 model SessionAcceptResponse {
-    ...AcceptedResponse;
-    ...Body<Session>;
+    @statusCode statusCode: 202;
+    @body session: Session;
 }
 
 @doc("Response for a successful session update.")
 model SessionUpdateResponse {
-    ...OkResponse;
-    ...Body<Session>;
+    @statusCode statusCode: 200;
+    @body session: Session;
 }
 
 @doc("Response for internal server errors.")
@@ -42,30 +42,30 @@ model InternalServerErrorResponse {
 
 @doc("Response for session validation errors.")
 model SessionValidationErrorResponse {
-    ...BadRequestResponse;
-    ...Body<ValidationError>;
+    @statusCode statusCode: 400;
+    @body error: ValidationError;
 }
 
 @doc("Response when a session is not found.")
 model SessionNotFoundErrorResponse {
-    ...NotFoundResponse;
-    ...Body<NotFoundError>;
+    @statusCode statusCode: 404;
+    @body error: NotFoundError;
 }
 
 @doc("Response for unauthorized session access.")
 model SessionUnauthorizedErrorResponse {
-    ...UnauthorizedResponse;
-    ...Body<UnauthorizedError>;
+    @statusCode statusCode: 401;
+    @body error: UnauthorizedError;
 }
 
 @doc("Response for forbidden session access.")
 model SessionForbiddenErrorResponse {
-    ...ForbiddenResponse;
-    ...Body<UnauthorizedError>;
+    @statusCode statusCode: 403;
+    @body error: UnauthorizedError;
 }
 
 @doc("Response for session conflict errors.")
 model SessionConflictErrorResponse {
-    ...ConflictResponse;
-    ...Body<ValidationError>;
+    @statusCode statusCode: 409;
+    @body error: ValidationError;
 }
