@@ -7,5 +7,11 @@ model Error {
 
 model Session {
     classId: int32;
-    deliveryMode: "in-person" | "online";
+    deliveryMode: DeliveryMode;
+}
+
+enum DeliveryMode {
+    inPerson: "in-person",
+    online: "online",
+    hybrid: "hybrid",
 }

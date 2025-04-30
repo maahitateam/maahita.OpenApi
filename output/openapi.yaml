@@ -200,6 +200,12 @@ paths:
         - BearerAuth: []
 components:
   schemas:
+    DeliveryMode:
+      type: string
+      enum:
+        - in-person
+        - online
+        - hybrid
     InternalServerError:
       type: object
       required:
@@ -234,10 +240,7 @@ components:
           type: integer
           format: int32
         deliveryMode:
-          type: string
-          enum:
-            - in-person
-            - online
+          $ref: '#/components/schemas/DeliveryMode'
     SessionUpdate:
       type: object
       properties:
@@ -245,10 +248,7 @@ components:
           type: integer
           format: int32
         deliveryMode:
-          type: string
-          enum:
-            - in-person
-            - online
+          $ref: '#/components/schemas/DeliveryMode'
     UnauthorizedError:
       type: object
       required:
