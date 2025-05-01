@@ -22,3 +22,10 @@ model UnauthorizedError {
     code: "UN_AUTHORIZED_ERROR";
     message: string;
 }
+
+@error
+model RateLimitError {
+    code: "RATE_LIMIT_ERROR";
+    message: string;
+    retryAfter: int16;
+}

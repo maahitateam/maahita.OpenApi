@@ -69,3 +69,9 @@ model SessionConflictErrorResponse {
     @statusCode statusCode: 409;
     @body error: ValidationError;
 }
+
+@doc("Response for rate limiting errors.")
+model RateLimitErrorResponse {
+    @statusCode statusCode: 429;
+    @body error: RateLimitError;
+}

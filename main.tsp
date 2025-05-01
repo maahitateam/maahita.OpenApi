@@ -14,14 +14,17 @@ namespace SessionService {
     /** List sessions */
     @get
     @useAuth(BearerAuth)
-    list(): SessionListResponse | SessionUnauthorizedErrorResponse;
+    list(
+    ): SessionListResponse | SessionUnauthorizedErrorResponse | RateLimitErrorResponse;
 
     /** Read session */
     @get
     @useAuth(BearerAuth)
-    read(
-      @path classId: int32,
-    ): SessionResponse | SessionNotFoundErrorResponse | SessionUnauthorizedErrorResponse;
+    read(@path classId: int32):
+      | SessionResponse
+      | SessionNotFoundErrorResponse
+      | SessionUnauthorizedErrorResponse
+      | RateLimitErrorResponse;
 
     /** Create a session */
     @post
