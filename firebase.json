@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "openapi-maahita",
+    "target": "openapi-maahita",
     "public": "public",
     "ignore": [
       "firebase.json",
@@ -9,7 +9,7 @@
     ],
     "rewrites": [
       {
-        "source": "/",
+        "source": "**",
         "destination": "/index.html"
       }
     ],
