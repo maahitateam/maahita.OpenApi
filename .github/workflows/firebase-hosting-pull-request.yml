@@ -12,10 +12,33 @@ jobs:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: npm run compile
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      - name: Checkout repository
+        uses: maahitateam/checkout@v1
+
+      - name: Set up Node.js
+        uses: maahitateam/setup-node@v1
         with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_MAHITA_2C3B1 }}
-          projectId: mahita-2c3b1
+          node-version: '20'
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build TypeSpec (if needed)
+        run: |
+          if [ -f "package.json" ]; then
+            npm run compile || true
+          fi
+
+      - name: Copy output folder to public
+        run: |
+          rm -rf public
+          cp -R output public
+
+      - name: Deploy to Firebase Hosting Preview
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          firebase hosting:channel:deploy pr-${{ github.event.pull_request.number }} --token "$FIREBASE_TOKEN"
