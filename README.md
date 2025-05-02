@@ -11,7 +11,7 @@ npm run compile
 ```
 This command will:
 - Compile the TypeSpec files
-- Generate the OpenAPI YAML at `output/openapi.yaml`
+- Generate the OpenAPI YAML at `*******************public*******************/openapi.yaml`
 
 ### Deploy to Firebase Hosting
 
@@ -20,7 +20,7 @@ npm run deploy
 ```
 This command will:
 - Compile and copy the OpenAPI YAML
-- Deploy the `output` folder (including `index.html` and `openapi.yaml`) to Firebase Hosting
+- Deploy the `public` folder (including `index.html` and `openapi.yaml`) to Firebase Hosting
 
 #### After deployment
 - Swagger UI will be available at: `https://<your-project-id>.web.app/`

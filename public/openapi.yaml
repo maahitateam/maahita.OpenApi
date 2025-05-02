@@ -25,6 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UnauthorizedError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
       tags:
         - Sessions
       security:
@@ -104,6 +110,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
       tags:
         - Sessions
       security:
@@ -230,6 +242,22 @@ components:
             - NOT_FOUND
         message:
           type: string
+    RateLimitError:
+      type: object
+      required:
+        - code
+        - message
+        - retryAfter
+      properties:
+        code:
+          type: string
+          enum:
+            - RATE_LIMIT_ERROR
+        message:
+          type: string
+        retryAfter:
+          type: integer
+          format: int16
     Session:
       type: object
       required:
