@@ -29,3 +29,9 @@ model RateLimitError {
     message: string;
     retryAfter: int16;
 }
+
+@error
+model ForbiddenError {
+    code: "FORBIDDEN_ERROR";
+    message: string;
+}
