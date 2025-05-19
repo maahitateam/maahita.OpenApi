@@ -48,3 +48,22 @@ model Address {
     state: string;
     zipCode: string;
 }
+@example(#{
+    id: "school-123",
+    name: "ABC High School",
+    address: #{
+        street: "456 Elm St",
+        city: "Anytown",
+        state: "CA",
+        zipCode: "67890",
+    },
+    contactNumber: "123-456-7890",
+    email: "info@abchighschool.edu",
+})
+model School {
+    id: string;
+    name: string;
+    address: Address;
+    contactNumber: string;
+    email: string;
+}

@@ -75,3 +75,4 @@ model RateLimitErrorResponse {
     @statusCode statusCode: 429;
     @body error: RateLimitError;
 }
+
