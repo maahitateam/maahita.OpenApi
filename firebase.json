@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "openapi-maahita",
+    "target": "maahita-dev-openapi",
     "public": "public",
     "ignore": [
       "firebase.json",

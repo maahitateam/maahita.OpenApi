@@ -1,5 +1,15 @@
 {
   "projects": {
-    "default": "mahita-2c3b1"
-  }
+    "default": "maahita-dev-411cf"
+  },
+  "targets": {
+    "maahita-dev-411cf": {
+      "hosting": {
+        "maahita-dev-openapi": [
+          "maahita-dev-openapi"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

@@ -1,10 +1,419 @@
 openapi: 3.1.0
 info:
-  title: Session Service
+  title: Maahita Backend API Services
   version: 0.0.0
 tags:
   - name: Sessions
+  - name: Classes
+  - name: Schools
 paths:
+  /api/v1/classes:
+    get:
+      operationId: Classes_list
+      description: List classes
+      parameters: []
+      responses:
+        '200':
+          description: Response for a successful list of sessions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Class'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+      tags:
+        - Classes
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Classes_create
+      description: Create a class
+      parameters: []
+      responses:
+        '202':
+          description: Response for a successful session acceptance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: Response for session conflict errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Classes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Class'
+      security:
+        - BearerAuth: []
+  /api/v1/classes/{classId}:
+    get:
+      operationId: Classes_read
+      description: Read class
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+      tags:
+        - Classes
+      security:
+        - BearerAuth: []
+    patch:
+      operationId: Classes_update
+      description: Update a class
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Response for a successful session update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Classes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClassUpdate'
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Classes_delete
+      description: Delete a class
+      parameters:
+        - name: classId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Class'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Classes
+      security:
+        - BearerAuth: []
+  /api/v1/schools:
+    get:
+      operationId: Schools_list
+      description: List schools
+      parameters: []
+      responses:
+        '200':
+          description: Response for a successful list of sessions.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/School'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+      tags:
+        - Schools
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Schools_create
+      description: Create a class
+      parameters: []
+      responses:
+        '202':
+          description: Response for a successful session acceptance.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '409':
+          description: Response for session conflict errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Schools
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/School'
+      security:
+        - BearerAuth: []
+  /api/v1/schools/{schoolId}:
+    get:
+      operationId: Schools_read
+      description: Read school
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '429':
+          description: Response for rate limiting errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RateLimitError'
+      tags:
+        - Schools
+      security:
+        - BearerAuth: []
+    patch:
+      operationId: Schools_update
+      description: Update a class
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response for a successful session update.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Schools
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SchoolUpdate'
+      security:
+        - BearerAuth: []
+    delete:
+      operationId: Schools_delete
+      description: Delete a class
+      parameters:
+        - name: schoolId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/School'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Schools
+      security:
+        - BearerAuth: []
   /api/v1/sessions:
     get:
       operationId: Sessions_list
@@ -212,6 +621,113 @@ paths:
         - BearerAuth: []
 components:
   schemas:
+    Address:
+      type: object
+      required:
+        - street
+        - city
+        - state
+        - zipCode
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+      examples:
+        - street: 123 Main St
+          city: Anytown
+          state: CA
+          zipCode: '12345'
+    AddressUpdate:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        zipCode:
+          type: string
+      examples:
+        - street: 123 Main St
+          city: Anytown
+          state: CA
+          zipCode: '12345'
+    Class:
+      type: object
+      required:
+        - id
+        - name
+        - subject
+        - schoolId
+        - location
+        - studentsCount
+        - curriculumProgress
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        subject:
+          type: string
+        schoolId:
+          type: string
+        location:
+          $ref: '#/components/schemas/Address'
+        studentsCount:
+          type: integer
+          format: int32
+        curriculumProgress:
+          type: integer
+          format: int32
+      examples:
+        - id: '123456'
+          name: Math 101
+          subject: Mathematics
+          schoolId: school-123
+          location:
+            street: 123 Main St
+            city: Srikakulam
+            state: Andhra Pradesh
+            zipCode: '12345'
+          studentsCount: 30
+          curriculumProgress: 75
+    ClassUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        subject:
+          type: string
+        schoolId:
+          type: string
+        location:
+          $ref: '#/components/schemas/AddressUpdate'
+        studentsCount:
+          type: integer
+          format: int32
+        curriculumProgress:
+          type: integer
+          format: int32
+      examples:
+        - id: '123456'
+          name: Math 101
+          subject: Mathematics
+          schoolId: school-123
+          location:
+            street: 123 Main St
+            city: Srikakulam
+            state: Andhra Pradesh
+            zipCode: '12345'
+          studentsCount: 30
+          curriculumProgress: 75
     DeliveryMode:
       type: string
       enum:
@@ -258,6 +774,58 @@ components:
         retryAfter:
           type: integer
           format: int16
+    School:
+      type: object
+      required:
+        - id
+        - name
+        - address
+        - contactNumber
+        - email
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/Address'
+        contactNumber:
+          type: string
+        email:
+          type: string
+      examples:
+        - id: school-123
+          name: ABC High School
+          address:
+            street: 456 Elm St
+            city: Anytown
+            state: CA
+            zipCode: '67890'
+          contactNumber: 123-456-7890
+          email: info@abchighschool.edu
+    SchoolUpdate:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressUpdate'
+        contactNumber:
+          type: string
+        email:
+          type: string
+      examples:
+        - id: school-123
+          name: ABC High School
+          address:
+            street: 456 Elm St
+            city: Anytown
+            state: CA
+            zipCode: '67890'
+          contactNumber: 123-456-7890
+          email: info@abchighschool.edu
     Session:
       type: object
       required:

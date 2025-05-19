@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "compile": "tsp compile main.tsp --emit=@typespec/openapi3 && mkdir -p public && cp tsp-output/schema/openapi.yaml public/openapi.yaml",
-    "deploy": "npm run compile && firebase deploy --only hosting:openapi-maahita"
+    "compile": "tsp compile main.tsp --emit=@typespec/openapi3 && mkdir -p public && cp tsp-output/schema/openapi.yaml public/openapi.yaml && cp static/index.html public/index.html",
+    "deploy": "npm run compile && firebase deploy --only hosting:maahita-dev-openapi"
   },
   "peerDependencies": {
     "@typespec/compiler": "latest",
