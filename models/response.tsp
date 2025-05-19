@@ -5,33 +5,33 @@ import "./error.tsp";
 using TypeSpec.Http;
 
 @doc("Response for a successful list of sessions.")
-model SessionListResponse {
+model ListResponse<T> {
     @statusCode statusCode: 200;
-    @body sessions: Session[];
+    @body list: T[];
 }
 
 @doc("Response for a successful session fetch.")
-model SessionResponse {
+model SuccessResponse<T> {
     @statusCode statusCode: 200;
-    @body session: Session;
+    @body body: T;
 }
 
 @doc("Response for a successful session creation.")
-model SessionCreateResponse {
+model CreateResponse<T> {
     @statusCode statusCode: 201;
-    @body session: Session;
+    @body body: T;
 }
 
 @doc("Response for a successful session acceptance.")
-model SessionAcceptResponse {
+model AcceptResponse<T> {
     @statusCode statusCode: 202;
-    @body session: Session;
+    @body body: T;
 }
 
 @doc("Response for a successful session update.")
-model SessionUpdateResponse {
+model UpdateResponse<T> {
     @statusCode statusCode: 200;
-    @body session: Session;
+    @body body: T;
 }
 
 @doc("Response for internal server errors.")
@@ -41,31 +41,31 @@ model InternalServerErrorResponse {
 }
 
 @doc("Response for session validation errors.")
-model SessionValidationErrorResponse {
+model ValidationErrorResponse<T> {
     @statusCode statusCode: 400;
     @body error: ValidationError;
 }
 
 @doc("Response when a session is not found.")
-model SessionNotFoundErrorResponse {
+model NotFoundErrorResponse<T> {
     @statusCode statusCode: 404;
     @body error: NotFoundError;
 }
 
 @doc("Response for unauthorized session access.")
-model SessionUnauthorizedErrorResponse {
+model UnauthorizedErrorResponse {
     @statusCode statusCode: 401;
     @body error: UnauthorizedError;
 }
 
 @doc("Response for forbidden session access.")
-model SessionForbiddenErrorResponse {
+model ForbiddenErrorResponse {
     @statusCode statusCode: 403;
-    @body error: UnauthorizedError;
+    @body error: ForbiddenError;
 }
 
 @doc("Response for session conflict errors.")
-model SessionConflictErrorResponse {
+model ConflictErrorResponse<T> {
     @statusCode statusCode: 409;
     @body error: ValidationError;
 }
