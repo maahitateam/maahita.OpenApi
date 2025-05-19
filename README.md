@@ -4,26 +4,38 @@ This repo contains OpenAPI documentation for maahita modules.
 
 ## Build & Deployment
 
-### Build (Generate OpenAPI YAML)
+
+### Build (Compile and Prepare OpenAPI Artifacts)
+
+To generate the OpenAPI YAML and prepare the public directory for deployment, run:
 
 ```sh
 npm run compile
 ```
-This command will:
-- Compile the TypeSpec files
-- Generate the OpenAPI YAML at `*******************public*******************/openapi.yaml`
+
+**What this does:**
+- Compiles the TypeSpec files (`main.tsp` and models) using the TypeSpec compiler.
+- Emits the OpenAPI 3.0 YAML file to `tsp-output/schema/openapi.yaml`.
+- Creates the `public` directory if it doesn't exist.
+- Copies the generated `openapi.yaml` to `public/openapi.yaml`.
+- Copies the static `index.html` from `static/index.html` to `public/index.html`.
+
+This ensures that both the OpenAPI spec and the documentation landing page are ready for deployment.
 
 ### Deploy to Firebase Hosting
+
+To deploy the API documentation and OpenAPI YAML to Firebase Hosting, run:
 
 ```sh
 npm run deploy
 ```
-This command will:
-- Compile and copy the OpenAPI YAML
-- Deploy the `public` folder (including `index.html` and `openapi.yaml`) to Firebase Hosting
+
+**What this does:**
+- Runs the compile step above to ensure all files are up to date.
+- Deploys the contents of the `public` directory (including `index.html` and `openapi.yaml`) to the configured Firebase Hosting site.
 
 #### After deployment
-- Swagger UI will be available at: `https://<your-project-id>.web.app/`
+- The documentation landing page (index.html) will be available at: `https://<your-project-id>.web.app/`
 - The raw OpenAPI YAML will be available at: `https://<your-project-id>.web.app/openapi.yaml`
 
 
