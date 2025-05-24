@@ -417,7 +417,7 @@ paths:
   /api/v1/sessions:
     get:
       operationId: Sessions_list
-      description: List sessions
+      description: List all sessions
       parameters: []
       responses:
         '200':
@@ -446,7 +446,7 @@ paths:
         - BearerAuth: []
     post:
       operationId: Sessions_create
-      description: Create a session
+      description: Create a new session
       parameters: []
       responses:
         '202':
@@ -490,9 +490,9 @@ paths:
       security:
         - BearerAuth: []
   /api/v1/sessions/{classId}:
-    get:
-      operationId: Sessions_read
-      description: Read session
+    delete:
+      operationId: Sessions_delete
+      description: Delete a session
       parameters:
         - name: classId
           in: path
@@ -519,21 +519,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotFoundError'
-        '429':
-          description: Response for rate limiting errors.
+        '500':
+          description: Response for internal server errors.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RateLimitError'
+                $ref: '#/components/schemas/InternalServerError'
       tags:
         - Sessions
       security:
         - BearerAuth: []
+  /api/v1/sessions/{sessionId}:
     put:
       operationId: Sessions_update
-      description: Update a session
+      description: End an existing session
       parameters:
-        - name: classId
+        - name: sessionId
           in: path
           required: true
           schema:
@@ -580,11 +581,10 @@ paths:
               $ref: '#/components/schemas/Session'
       security:
         - BearerAuth: []
-    delete:
-      operationId: Sessions_delete
-      description: Delete a session
+    get:
+      operationId: Sessions_getSession
       parameters:
-        - name: classId
+        - name: sessionId
           in: path
           required: true
           schema:
@@ -597,6 +597,52 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Sessions
+      security:
+        - BearerAuth: []
+  /api/v1/sessions/{sessionId}/participants/{participantId}:
+    put:
+      operationId: Sessions_updateParticipantStatus
+      description: Update participant status in a session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: participantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionParticipant'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
         '401':
           description: Response for unauthorized session access.
           content:
@@ -617,6 +663,79 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
       tags:
         - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+              required:
+                - status
+      security:
+        - BearerAuth: []
+    post:
+      operationId: Sessions_addParticipant
+      description: Add a participant to a session
+      parameters:
+        - name: sessionId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: participantId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Response for a successful session fetch.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionParticipant'
+        '400':
+          description: Response for session validation errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+        '401':
+          description: Response for unauthorized session access.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedError'
+        '404':
+          description: Response when a session is not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundError'
+        '500':
+          description: Response for internal server errors.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: boolean
+              required:
+                - status
       security:
         - BearerAuth: []
 components:
@@ -681,6 +800,9 @@ components:
             zipCode: '12345'
           studentsCount: 30
           curriculumProgress: 75
+    DateTime:
+      type: string
+      format: date-time
     DeliveryMode:
       type: string
       enum:
@@ -711,6 +833,31 @@ components:
             - NOT_FOUND
         message:
           type: string
+    Participant:
+      type: object
+      required:
+        - id
+        - name
+        - isTeacher
+        - color
+        - initials
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        isTeacher:
+          type: boolean
+        color:
+          type: string
+        initials:
+          type: string
+      examples:
+        - id: participant-123
+          name: John Doe
+          isTeacher: true
+          color: '#FF5733'
+          initials: JD
     RateLimitError:
       type: object
       required:
@@ -759,17 +906,54 @@ components:
     Session:
       type: object
       required:
+        - id
         - classId
+        - startedAt
         - deliveryMode
       properties:
+        id:
+          type: string
         classId:
+          type: integer
+          format: int32
+        startedAt:
+          $ref: '#/components/schemas/DateTime'
+        endedAt:
+          $ref: '#/components/schemas/DateTime'
+        duration:
           type: integer
           format: int32
         deliveryMode:
           $ref: '#/components/schemas/DeliveryMode'
       examples:
-        - classId: 123456
-          deliveryMode: in-person
+        - id: session-123
+          classId: 123456
+          startedAt: 2025-05-24T13:30
+          endedAt: 2025-05-24T14:30
+          duration: 60
+          deliveryMode: online
+    SessionParticipant:
+      type: object
+      required:
+        - sessionId
+        - participantId
+        - updatedParticipant
+      properties:
+        sessionId:
+          type: string
+        participantId:
+          type: string
+        updatedParticipant:
+          $ref: '#/components/schemas/Participant'
+      examples:
+        - sessionId: session-123
+          participantId: participant-123
+          updatedParticipant:
+            id: participant-123
+            name: John Doe
+            isTeacher: true
+            color: '#FF5733'
+            initials: JD
     UnauthorizedError:
       type: object
       required:
