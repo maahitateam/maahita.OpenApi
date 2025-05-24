@@ -122,7 +122,7 @@ paths:
         - Classes
       security:
         - BearerAuth: []
-    patch:
+    put:
       operationId: Classes_update
       description: Update a class
       parameters:
@@ -170,7 +170,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClassUpdate'
+              $ref: '#/components/schemas/Class'
       security:
         - BearerAuth: []
     delete:
@@ -326,7 +326,7 @@ paths:
         - Schools
       security:
         - BearerAuth: []
-    patch:
+    put:
       operationId: Schools_update
       description: Update a class
       parameters:
@@ -373,7 +373,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SchoolUpdate'
+              $ref: '#/components/schemas/School'
       security:
         - BearerAuth: []
     delete:
@@ -529,7 +529,7 @@ paths:
         - Sessions
       security:
         - BearerAuth: []
-    patch:
+    put:
       operationId: Sessions_update
       description: Update a session
       parameters:
@@ -577,7 +577,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SessionUpdate'
+              $ref: '#/components/schemas/Session'
       security:
         - BearerAuth: []
     delete:
@@ -642,22 +642,6 @@ components:
           city: Anytown
           state: CA
           zipCode: '12345'
-    AddressUpdate:
-      type: object
-      properties:
-        street:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        zipCode:
-          type: string
-      examples:
-        - street: 123 Main St
-          city: Anytown
-          state: CA
-          zipCode: '12345'
     Class:
       type: object
       required:
@@ -679,37 +663,6 @@ components:
           type: string
         location:
           $ref: '#/components/schemas/Address'
-        studentsCount:
-          type: integer
-          format: int32
-        curriculumProgress:
-          type: integer
-          format: int32
-      examples:
-        - id: '123456'
-          name: Math 101
-          subject: Mathematics
-          schoolId: school-123
-          location:
-            street: 123 Main St
-            city: Srikakulam
-            state: Andhra Pradesh
-            zipCode: '12345'
-          studentsCount: 30
-          curriculumProgress: 75
-    ClassUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        subject:
-          type: string
-        schoolId:
-          type: string
-        location:
-          $ref: '#/components/schemas/AddressUpdate'
         studentsCount:
           type: integer
           format: int32
@@ -803,45 +756,11 @@ components:
             zipCode: '67890'
           contactNumber: 123-456-7890
           email: info@abchighschool.edu
-    SchoolUpdate:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          $ref: '#/components/schemas/AddressUpdate'
-        contactNumber:
-          type: string
-        email:
-          type: string
-      examples:
-        - id: school-123
-          name: ABC High School
-          address:
-            street: 456 Elm St
-            city: Anytown
-            state: CA
-            zipCode: '67890'
-          contactNumber: 123-456-7890
-          email: info@abchighschool.edu
     Session:
       type: object
       required:
         - classId
         - deliveryMode
-      properties:
-        classId:
-          type: integer
-          format: int32
-        deliveryMode:
-          $ref: '#/components/schemas/DeliveryMode'
-      examples:
-        - classId: 123456
-          deliveryMode: in-person
-    SessionUpdate:
-      type: object
       properties:
         classId:
           type: integer

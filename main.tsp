@@ -6,4 +6,4 @@ import "./interfaces/classes.tsp";
 import "./interfaces/schools.tsp";
 
 @service(#{ title: "Maahita Backend API Services" })
-namespace MaahitaAPIServices;
+namespace MaahitaAPIServices {}

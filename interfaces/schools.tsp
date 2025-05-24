@@ -33,7 +33,7 @@ namespace MaahitaAPIServices {
             | InternalServerErrorResponse;
 
         /** Update a class */
-        @patch
+        @put
         @useAuth(BearerAuth)
         update(@path schoolId: string, @body body: School):
             | UpdateResponse<School>

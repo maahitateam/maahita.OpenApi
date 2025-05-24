@@ -33,7 +33,7 @@ namespace MaahitaAPIServices {
             | InternalServerErrorResponse;
 
         /** Update a session */
-        @patch
+        @put
         @useAuth(BearerAuth)
         update(@path classId: int32, @body body: Session):
             | SuccessResponse<Session>
